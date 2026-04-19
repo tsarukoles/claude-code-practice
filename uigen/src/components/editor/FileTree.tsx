@@ -44,6 +44,7 @@ function FileTreeNode({ node, level }: FileTreeNodeProps) {
   return (
     <div>
       <div
+        data-testid="file-tree-item"
         className={cn(
           "flex items-center gap-2 px-2 py-1.5 hover:bg-gray-100 cursor-pointer text-sm transition-colors",
           selectedFile === node.path && "bg-blue-50 text-blue-600"
@@ -106,7 +107,7 @@ export function FileTree() {
 
   return (
     <ScrollArea className="h-full">
-      <div className="py-2" key={refreshTrigger}>
+      <div data-testid="file-tree" className="py-2" key={refreshTrigger}>
         {rootChildren.map((child) => (
           <FileTreeNode key={child.path} node={child} level={0} />
         ))}

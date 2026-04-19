@@ -24,11 +24,13 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto px-4 py-6">
+    <div data-testid="message-list" className="flex flex-col h-full overflow-y-auto px-4 py-6">
       <div className="space-y-6 max-w-4xl mx-auto w-full">
         {messages.map((message) => (
           <div
             key={message.id || message.content}
+            data-testid="message-item"
+            data-role={message.role}
             className={cn(
               "flex gap-4",
               message.role === "user" ? "justify-end" : "justify-start"
@@ -106,7 +108,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                       {isLoading &&
                         message.role === "assistant" &&
                         messages.indexOf(message) === messages.length - 1 && (
-                          <div className="flex items-center gap-2 mt-3 text-neutral-500">
+                          <div data-testid="loading-indicator" className="flex items-center gap-2 mt-3 text-neutral-500">
                             <Loader2 className="h-3 w-3 animate-spin" />
                             <span className="text-sm">Generating...</span>
                           </div>
@@ -121,7 +123,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                   ) : isLoading &&
                     message.role === "assistant" &&
                     messages.indexOf(message) === messages.length - 1 ? (
-                    <div className="flex items-center gap-2 text-neutral-500">
+                    <div data-testid="loading-indicator" className="flex items-center gap-2 text-neutral-500">
                       <Loader2 className="h-3 w-3 animate-spin" />
                       <span className="text-sm">Generating...</span>
                     </div>
