@@ -1,10 +1,6 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(xargs grep *)",
-      "Bash(npx @playwright/mcp@latest --help)",
-      "Read(//c/Program Files/GitHub CLI//**)",
-      "Read(//c/Users/Oles/AppData/Local/Programs/**)"
-    ]
+    "allow": ["mcp__playwright"],
+    "deny": []
   }
 }

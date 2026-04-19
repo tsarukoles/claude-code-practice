@@ -30,6 +30,11 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Project Seup
+        run: |
+          npm run setup
+          npm run dev:daemon
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
@@ -39,6 +44,33 @@ jobs:
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
             actions: read
+
+          custom_instruction: |
+            The project is already set up with all dependancies installed. The server is already running at localhost:3000.
+            Logs from it are being written to log.txt. If needed, you can query db with 'sqlite3' cli.
+            Use the following playwright MCP tools to launch the browser and interact with the app:
+            - mcp__playwright__browser_navigate: Navigate to a URL
+            - mcp__playwright__browser_snapshot: Capture accessibility snapshot of the current page
+            - mcp__playwright__browser_take_screenshot: Take a screenshot of the current page
+            - mcp__playwright__browser_click: Click an element on the page
+            - mcp__playwright__browser_type: Type text into an input field
+            - mcp__playwright__browser_fill_form: Fill multiple form fields at once
+            - mcp__playwright__browser_hover: Hover over an element
+            - mcp__playwright__browser_drag: Drag an element to another location
+            - mcp__playwright__browser_press_key: Press a keyboard key
+            - mcp__playwright__browser_select_option: Select an option from a dropdown
+            - mcp__playwright__browser_navigate_back: Navigate back in browser history
+            - mcp__playwright__browser_wait_for: Wait for a condition or selector
+            - mcp__playwright__browser_evaluate: Execute JavaScript in the browser context
+            - mcp__playwright__browser_run_code: Run code in the browser
+            - mcp__playwright__browser_console_messages: Retrieve browser console messages
+            - mcp__playwright__browser_network_requests: Retrieve network requests made by the page
+            - mcp__playwright__browser_handle_dialog: Handle browser dialogs (alert, confirm, prompt)
+            - mcp__playwright__browser_file_upload: Upload a file to an input element
+            - mcp__playwright__browser_resize: Resize the browser window
+            - mcp__playwright__browser_tabs: Manage browser tabs
+            - mcp__playwright__browser_close: Close the browser
+
 
           # Optional: Give a custom prompt to Claude. If this is not specified, Claude will perform the instructions specified in the comment that tagged it.
           # prompt: 'Update the pull request description to include a summary of changes.'
