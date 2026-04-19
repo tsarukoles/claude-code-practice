@@ -68,11 +68,15 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: `cross-env DATABASE_URL="${TEST_DB_URL}" NODE_OPTIONS="--require ./node-compat.cjs" next dev --turbopack`,
+    // CI uses `next start` (pre-built); local dev reuses the running dev server
+    command: process.env.CI
+      ? `node_modules/.bin/next start`
+      : `node_modules/.bin/next dev --turbopack`,
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     env: {
       DATABASE_URL: TEST_DB_URL,
+      NODE_OPTIONS: '--require ./node-compat.cjs',
     },
   },
 });
