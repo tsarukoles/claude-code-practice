@@ -7,6 +7,8 @@ import { cleanTestDb, disconnectTestPrisma } from './utils/db';
 
 const STORAGE_STATE_PATH = path.join(__dirname, 'fixtures/.auth/user.json');
 
+const BASE_URL = 'http://localhost:3000';
+
 export default async function globalSetup(_config: FullConfig) {
   // Ensure .auth directory exists
   fs.mkdirSync(path.dirname(STORAGE_STATE_PATH), { recursive: true });
@@ -27,7 +29,7 @@ export default async function globalSetup(_config: FullConfig) {
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  await page.goto('/');
+  await page.goto(BASE_URL);
 
   // Open Sign Up dialog
   await page.getByRole('button', { name: 'Sign Up' }).click();
