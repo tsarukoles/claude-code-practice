@@ -50,8 +50,8 @@ test.describe('Project Management', () => {
     await expect(authenticatedPage).toHaveURL(new RegExp(p2.id));
   });
 
-  test('unauthenticated user is redirected from project route to home', async ({ page }) => {
-    await page.goto('/nonexistent-project-id');
-    await expect(page).toHaveURL('/');
+  test('unauthenticated user is redirected from project route to home', async ({ unauthenticatedPage }) => {
+    await unauthenticatedPage.goto('http://localhost:3000/nonexistent-project-id');
+    await expect(unauthenticatedPage).toHaveURL('http://localhost:3000/');
   });
 });

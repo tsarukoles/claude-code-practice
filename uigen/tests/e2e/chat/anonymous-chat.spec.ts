@@ -31,14 +31,14 @@ test.describe('Anonymous Chat', () => {
     await expect(home.preview.welcomeHeading).not.toBeVisible();
   });
 
-  test('anonymous work is tracked in localStorage after message', async ({ page }) => {
+  test('anonymous work is tracked in sessionStorage after message', async ({ page }) => {
     const home = new HomePage(page);
     await home.goto();
 
     await home.chat.sendMessageAndWait(CHAT_PROMPTS.counter);
 
-    const anonWork = await page.evaluate(() => localStorage.getItem('anon-work'));
-    expect(anonWork).not.toBeNull();
+    const hasAnonWork = await page.evaluate(() => sessionStorage.getItem('uigen_has_anon_work'));
+    expect(hasAnonWork).toBe('true');
   });
 
   test('chat input is disabled while streaming', async ({ page }) => {

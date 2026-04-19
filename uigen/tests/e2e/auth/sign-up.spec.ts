@@ -25,13 +25,15 @@ test.describe('Sign Up', () => {
     await expect(home.auth.errorMessage).toContainText('Email already registered');
   });
 
-  test('password shorter than 8 chars shows validation error', async ({ page }) => {
+  test('password shorter than 8 chars prevents form submission', async ({ page }) => {
     const home = new HomePage(page);
     await home.goto();
     await home.openSignUp();
 
     await home.auth.signUp(uniqueEmail(), PASSWORDS.tooShort);
-    await expect(home.auth.errorMessage).toBeVisible();
+    // Browser's minLength constraint blocks submission — dialog stays open
+    await expect(home.auth.dialog).toBeVisible();
+    await expect(home.signOutButton).not.toBeVisible();
   });
 
   test('mismatched passwords shows error', async ({ page }) => {

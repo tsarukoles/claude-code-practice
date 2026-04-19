@@ -26,8 +26,11 @@ export class ProjectPage extends HomePage {
   }
 
   async createNewDesign(): Promise<string> {
+    const currentUrl = this.page.url();
     await this.newDesignButton.click();
-    await this.page.waitForURL(/\/[a-z0-9]+/);
+    await this.page.waitForURL(
+      url => url.toString() !== currentUrl && /\/[a-z0-9]+$/.test(url.toString())
+    );
     return this.page.url().split('/').pop()!;
   }
 
